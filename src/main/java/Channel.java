@@ -26,6 +26,10 @@ public class Channel {
         this.name = name;
     }
 
+    public Channel() {
+        
+    }
+
     public Long getId() {
         return id;
     }
