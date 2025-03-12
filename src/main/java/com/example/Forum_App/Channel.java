@@ -1,3 +1,5 @@
+package com.example.Forum_App;
+
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class Channel {
     private String name;
 
     //annotation to define a one-to-many relationship, to contain several messages.
-    //mapping the message-list to the Channel
+    //mapping the message-list to the com.example.Forum_App.Channel
     @ElementCollection
     private List<String> messages = new ArrayList<>();
 
@@ -27,7 +29,7 @@ public class Channel {
     }
 
     public Channel() {
-        
+
     }
 
     public Long getId() {
