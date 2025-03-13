@@ -22,7 +22,7 @@ public class ChannelController {
 
     @GetMapping
     public List<Channel> getAllChannels() {
-        return channelRepository.findAll();
+        return channelRepository.findAllWithMessages();
     }
 
     @GetMapping("/{id}")
