@@ -1,20 +1,24 @@
 package com.example.Forum_App;
 
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
-@Slf4j
 @RestController
 @RequestMapping("/Channels")
-@RequiredArgsConstructor
 public class ChannelController {
 
     private final ChannelService channelService;
     private final ChannelRepository channelRepository;
+
+    // Explicit constructor
+    public ChannelController(ChannelService channelService, ChannelRepository channelRepository) {
+        this.channelService = channelService;
+        this.channelRepository = channelRepository;
+    }
 
     @GetMapping
     public List<Channel> getAllChannels() {
@@ -23,10 +27,11 @@ public class ChannelController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Channel> getChannel(@PathVariable Long id) {
+        Logger logger = Logger.getLogger(ChannelController.class.getName());
         return channelRepository.findById(id)
                 .map(channel -> {
-                    log.info("Channel: {}", channel.getName());
-                    log.info("Messages: {}", channel.getMessages());
+                    logger.log(Level.INFO, "Channel: " + channel.getName()); // Log channel
+                    logger.log(Level.INFO, "Messages: " + channel.getMessages()); // Log messages
                     return ResponseEntity.ok(channel);
                 })
                 .orElse(ResponseEntity.notFound().build());
@@ -47,14 +52,17 @@ public class ChannelController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<Channel> addMessage(@PathVariable Long id, @RequestBody String message) {
+    public ResponseEntity<Channel> addMessage(@PathVariable Long id, @RequestBody String messageContent) {
+        Logger logger = Logger.getLogger(ChannelController.class.getName());
         return channelRepository.findById(id)
                 .map(channel -> {
+                    logger.info("Adding message to channel: " + channel.getName());
                     Message newMessage = new Message();
-                    newMessage.setContent(message);
+                    newMessage.setContent(messageContent);
                     newMessage.setChannel(channel);
                     channel.addMessage(newMessage);
                     channelRepository.save(channel);
+                    logger.info("Message saved: " + newMessage.getContent());
                     return ResponseEntity.ok(channel);
                 })
                 .orElse(ResponseEntity.notFound().build());

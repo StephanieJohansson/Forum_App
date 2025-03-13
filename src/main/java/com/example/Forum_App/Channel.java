@@ -22,18 +22,14 @@ public class Channel {
     //mapping the message-list to the com.example.Forum_App.Channel
     @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference//handles serializations of messages
-    @JsonIgnore
+    //@JsonIgnore
     private List<Message> messages = new ArrayList<>();
 
     //constructor, getters och setters
-   // public Channel(Long id, String name) {
-     //   this.id = id;
-       // this.name = name;
-    //}
 
-   // public Channel() {
+    public Channel() {
 
-    //}
+    }
 
     public Long getId() {
 
