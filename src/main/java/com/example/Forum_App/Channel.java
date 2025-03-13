@@ -19,8 +19,10 @@ public class Channel {
 
     //annotation to define a one-to-many relationship, to contain several messages.
     //mapping the message-list to the com.example.Forum_App.Channel
-    @ElementCollection
-    private List<String> messages = new ArrayList<>();
+    //@ElementCollection
+    //private List<String> messages = new ArrayList<>();
+    @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Message> messages = new ArrayList<>();
 
     //constructor, getters och setters
     public Channel(Long id, String name) {
@@ -40,11 +42,12 @@ public class Channel {
         return name;
     }
 
-    public List<String> getMessages() {
+    public List<Message> getMessages() {
         return messages;
     }
 
-    public void addMessage(String message) {
+    public void addMessage(Message message) {
         messages.add(message);
+        message.setChannel(this);
     }
 }

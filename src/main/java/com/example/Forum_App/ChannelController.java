@@ -51,8 +51,11 @@ public class ChannelController {
         //update channel and save back to database, return with OK status. Or else return response 404
         return channelRepository.findById(id)
                 .map(channel -> {
-                    channel.getMessages().add(message);
-                    channelRepository.save(channel);
+                    Message messages = new Message();
+                    messages.setContent(message);
+                    messages.setChannel(channel); // Koppla meddelandet till kanalen
+                    channel.addMessage(messages); // Lägg till meddelandet i kanalen
+                    channelRepository.save(channel); // Spara kanalen (och meddelandet)
                     return ResponseEntity.ok(channel);
                 })
                 .orElse(ResponseEntity.notFound().build());
