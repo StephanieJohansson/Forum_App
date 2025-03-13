@@ -1,5 +1,6 @@
 package com.example.Forum_App;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -46,6 +47,7 @@ public class ChannelController {
     //handles put-requests to add message to specific channel. requestbody indicates that the payload of the
     //request will be a string (the message)
     @PutMapping("/{id}")
+    @Transactional //keeping the hibernate session open through the whole method
     public ResponseEntity<Channel> addMessage(@PathVariable Long id, @RequestBody String message) {
         //attempts to find channel by ID using repository. If it's found add message to channel's list of messages,
         //update channel and save back to database, return with OK status. Or else return response 404
