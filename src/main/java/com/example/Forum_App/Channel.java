@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //marking the class as a JPA entity which will store it into the database
 @Entity
@@ -21,8 +20,7 @@ public class Channel {
     //annotation to define a one-to-many relationship, to contain several messages.
     //mapping the message-list to the com.example.Forum_App.Channel
     @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference//handles serializations of messages
-    //@JsonIgnore
+    @JsonManagedReference("channel-messages")//handles serializations of messages
     private List<Message> messages = new ArrayList<>();
 
     //constructor, getters och setters

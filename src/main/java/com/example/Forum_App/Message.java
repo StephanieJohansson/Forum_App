@@ -23,7 +23,7 @@ public class Message {
     @ManyToOne
     //@JsonIgnore
     @JoinColumn(name = "channel_id")
-    @JsonBackReference
+    @JsonBackReference("channel-messages")
     private Channel channel;
 
 
