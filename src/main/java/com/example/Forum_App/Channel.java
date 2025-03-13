@@ -1,5 +1,6 @@
 package com.example.Forum_App;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,29 +21,42 @@ public class Channel {
     //annotation to define a one-to-many relationship, to contain several messages.
     //mapping the message-list to the com.example.Forum_App.Channel
     @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore //ignore messages on serialization
+    @JsonManagedReference//handles serializations of messages
+    @JsonIgnore
     private List<Message> messages = new ArrayList<>();
 
     //constructor, getters och setters
-    public Channel(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+   // public Channel(Long id, String name) {
+     //   this.id = id;
+       // this.name = name;
+    //}
 
-    public Channel() {
+   // public Channel() {
 
-    }
+    //}
 
     public Long getId() {
+
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
+
         return name;
+    }
+    public void setName(String name) {
+        this.name = name;
     }
 
     public List<Message> getMessages() {
         return messages;
+    }
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 
     public void addMessage(Message message) {
