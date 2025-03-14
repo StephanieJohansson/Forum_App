@@ -1,27 +1,32 @@
 package com.example.Forum_App;
 
+//importing necessary JPA annotation and Jackson annotations for json handling
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+//annotation to mark this class as a JPA entity(represent a table in database)
 @Entity
 public class Message {
 
+    //annotation as primary key
     @Id
+    //strategy to specify primary key value automatically generated using an identity column in database
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
 
+    //field to store content of message
     private String content;
 
+    //annotation to define many-to-one relationship between message and user
     @ManyToOne
+    //joinColumn to specify foreign key column in the message table that references to user table
     @JoinColumn(name = "user_id")
+    //annotation to prevent infinite recursion then serializing to json
     @JsonBackReference
-    //@JsonIgnore// avoid infinite recursion
     private User user;
 
     @ManyToOne
-    //@JsonIgnore
     @JoinColumn(name = "channel_id")
     @JsonBackReference("channel-messages")
     private Channel channel;

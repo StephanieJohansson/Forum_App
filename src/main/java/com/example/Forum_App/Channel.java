@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 public class Channel {
 
-    //marking this as primarykey
+    //marking this as primary key
     @Id
     //strategy to automatically generate the value for primary key in database when a new post is created
     //(automatically sets an uniq ID for every new channel/message)
@@ -20,7 +20,8 @@ public class Channel {
     //annotation to define a one-to-many relationship, to contain several messages.
     //mapping the message-list to the com.example.Forum_App.Channel
     @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference("channel-messages")//handles serializations of messages
+    //handles serializations of messages
+    @JsonManagedReference("channel-messages")
     private List<Message> messages = new ArrayList<>();
 
     //constructor, getters och setters
